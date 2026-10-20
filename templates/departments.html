@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+{% block title %}Department Management - Smart Employee Management System{% endblock %}
+
+{% block content %}
+{% if department %}
+<div class="page-header">
+    <h2><span class="icon">&#9638;</span>Department Details</h2>
+    <div>
+        <a href="/departments/{{ department.id }}/edit" class="btn btn-warning">&#9998; Edit</a>
+        <a href="/departments" class="btn btn-secondary">&#8592; Back to List</a>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <div class="details-grid">
+            <div class="details-row">
+                <div class="details-label">Department Name</div>
+                <div class="details-value">{{ department.name }}</div>
+            </div>
+            <div class="details-row">
+                <div class="details-label">Description</div>
+                <div class="details-value">{{ department.description or '-' }}</div>
+            </div>
+            <div class="details-row">
+                <div class="details-label">Employee Count</div>
+                <div class="details-value">{{ department.employee_count }}</div>
+            </div>
+            <div class="details-row">
+                <div class="details-label">Created</div>
+                <div class="details-value">{{ department.created_at or '-' }}</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<h3 style="margin-top:1.5rem;">Employees</h3>
+{% if department_employees %}
+<div class="table-container">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Employee ID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Position</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for emp in department_employees %}
+            <tr>
+                <td>{{ emp.employee_id }}</td>
+                <td>{{ emp.first_name }}</td>
+                <td>{{ emp.last_name }}</td>
+                <td>{{ emp.position or '-' }}</td>
+                <td><span class="badge {% if emp.status == 'active' %}badge-success{% else %}badge-secondary{% endif %}">{{ emp.status or '-' }}</span></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+<div class="empty-state">
+    <p>No employees in this department.</p>
+</div>
+{% endif %}
+{% endif %}
+
+<div class="page-header">
+    <h2><span class="icon">&#9638;</span>Department Management</h2>
+    <a href="/departments/add" class="btn btn-primary">&#10010; Add Department</a>
+</div>
+
+<form method="GET" action="/departments" class="search-form">
+    <input type="text" name="search" class="form-control" style="max-width:300px;" placeholder="Search departments..." value="{{ search_term or '' }}">
+    <button type="submit" class="btn btn-outline" style="margin-top:0.5rem;">Search</button>
+</form>
+
+<div class="table-container">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Department Name</th>
+                <th>Description</th>
+                <th>Employee Count</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if departments %}
+            {% for dept in departments %}
+            <tr>
+                <td>{{ dept.id }}</td>
+                <td>{{ dept.name }}</td>
+                <td>{{ dept.description or '-' }}</td>
+                <td>{{ dept.employee_count }}</td>
+                <td>
+                    <div class="actions">
+                        <a href="/departments/{{ dept.id }}" class="btn btn-outline-info btn-sm">&#128065; View</a>
+                        <a href="/departments/{{ dept.id }}/edit" class="btn btn-outline-warning btn-sm">&#9998; Edit</a>
+                        <form method="POST" action="/departments/{{ dept.id }}/delete" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this department?');">
+                            <button class="btn btn-outline-danger btn-sm">&#128465; Delete</button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+            {% else %}
+            <tr>
+                <td colspan="5" class="text-center">No departments found.</td>
+            </tr>
+            {% endif %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

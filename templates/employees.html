@@ -1,0 +1,133 @@
+{% extends "base.html" %}
+
+{% block title %}Employees - Smart Employee Management System{% endblock %}
+
+{% block content %}
+{% if employee %}
+<div class="page-header">
+    <h2><span class="icon">&#9733;</span>Employee Details</h2>
+    <div>
+        <a href="/employees/{{ employee.id }}/edit" class="btn btn-warning">&#9998; Edit</a>
+        <a href="/employees" class="btn btn-secondary">&#8592; Back to List</a>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <div class="details-grid">
+            <div class="details-row">
+                <div class="details-label">Employee ID</div>
+                <div class="details-value">{{ employee.employee_id }}</div>
+            </div>
+            <div class="details-row">
+                <div class="details-label">Name</div>
+                <div class="details-value">{{ employee.first_name }} {{ employee.last_name }}</div>
+            </div>
+            <div class="details-row">
+                <div class="details-label">Email</div>
+                <div class="details-value">{{ employee.email }}</div>
+            </div>
+            <div class="details-row">
+                <div class="details-label">Phone</div>
+                <div class="details-value">{{ employee.phone or '-' }}</div>
+            </div>
+            <div class="details-row">
+                <div class="details-label">Gender</div>
+                <div class="details-value">{{ employee.gender or '-' }}</div>
+            </div>
+            <div class="details-row">
+                <div class="details-label">Date of Birth</div>
+                <div class="details-value">{{ employee.date_of_birth or '-' }}</div>
+            </div>
+            <div class="details-row">
+                <div class="details-label">Address</div>
+                <div class="details-value">{{ employee.address or '-' }}</div>
+            </div>
+            <div class="details-row">
+                <div class="details-label">Position</div>
+                <div class="details-value">{{ employee.position or '-' }}</div>
+            </div>
+            <div class="details-row">
+                <div class="details-label">Salary</div>
+                <div class="details-value">{{ employee.salary or '-' }}</div>
+            </div>
+            <div class="details-row">
+                <div class="details-label">Hire Date</div>
+                <div class="details-value">{{ employee.hire_date or '-' }}</div>
+            </div>
+            <div class="details-row">
+                <div class="details-label">Department</div>
+                <div class="details-value">{{ employee.department_name or '-' }}</div>
+            </div>
+            <div class="details-row">
+                <div class="details-label">Status</div>
+                <div class="details-value">
+                    <span class="badge {% if employee.status == 'active' %}badge-success{% else %}badge-secondary{% endif %}">{{ employee.status or '-' }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<div class="page-header">
+    <h2><span class="icon">&#9733;</span>Employees</h2>
+    <a href="/employees/add" class="btn btn-primary">&#10010; Add Employee</a>
+</div>
+
+<form method="GET" action="/employees" class="search-form">
+    <input type="text" name="search" class="form-control" style="max-width:300px;" placeholder="Search by employee ID, name, email, or position" value="{{ search_term or '' }}">
+    <button type="submit" class="btn btn-outline" style="margin-top:0.5rem;">Search</button>
+</form>
+
+{% if employees %}
+<div class="table-container">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Employee ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Position</th>
+                <th>Department</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for emp in employees %}
+            <tr>
+                <td>{{ emp['id'] }}</td>
+                <td>{{ emp['employee_id'] }}</td>
+                <td>{{ emp['first_name'] }} {{ emp['last_name'] }}</td>
+                <td>{{ emp['email'] }}</td>
+                <td>{{ emp['phone'] or '-' }}</td>
+                <td>{{ emp['position'] or '-' }}</td>
+                <td>{{ emp['department_name'] or '-' }}</td>
+                <td><span class="badge {% if emp['status'] == 'active' %}badge-success{% else %}badge-secondary{% endif %}">{{ emp['status'] or '-' }}</span></td>
+                <td>
+                    <div class="actions">
+                        <a href="/employees/{{ emp['id'] }}" class="btn btn-outline-info btn-sm">&#128065; View</a>
+                        <a href="/employees/{{ emp['id'] }}/edit" class="btn btn-outline-warning btn-sm">&#9998; Edit</a>
+                        <form method="POST" action="/employees/{{ emp['id'] }}/delete" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this employee?');">
+                            <button class="btn btn-outline-danger btn-sm">&#128465; Delete</button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+<div class="empty-state">
+    <h4><span class="icon">&#9888;</span>No employees found</h4>
+    {% if search_term %}
+        <p>No employees match the search criteria "{{ search_term }}".</p>
+    {% endif %}
+    <a href="/employees/add" class="btn btn-primary" style="margin-top:1rem;">Add First Employee</a>
+</div>
+{% endif %}
+{% endblock %}
