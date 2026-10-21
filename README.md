@@ -4,7 +4,6 @@
 
 <img src="https://readme-typing-svg.demolab.com?font=Orbitron&weight=700&size=27&duration=3000&pause=900&color=00F7FF&center=true&vCenter=true&width=750&lines=EMPLOYEE+MANAGEMENT+SYSTEM;PEOPLE+%C3%97+PRODUCTIVITY+%C3%97+TECHNOLOGY;THE+FUTURE+OF+WORKPLACE+MANAGEMENT" alt="Animated project title" />
 
-### `NEXT-GEN WORKFORCE INTELLIGENCE`
 
 *A vision for smarter employee management, powerful analytics, and a beautifully engineered dashboard.*
 
