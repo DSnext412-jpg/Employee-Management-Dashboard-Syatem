@@ -200,19 +200,6 @@ Prefer maintainable components and a structure that can evolve with future requi
 
 ---
 
-## ◈ GETTING STARTED
-
-Clone the repository:
-
-```bash
-git clone https://github.com/DSnext412-jpg/Employee-Management-Dashboard-Syatem.git
-cd Employee-Management-Dashboard-Syatem
-```
-
-Once the application framework and dependencies have been added, follow the setup instructions provided for the selected stack.
-
----
-
 ## ◈ CONTRIBUTION & IDEAS
 
 Have an idea for a better dashboard, a useful workforce feature, or a smoother interaction?
