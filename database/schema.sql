@@ -37,7 +37,7 @@ create table if not exists employees (
         on delete set null on update cascade
 );
 
-create index idx_employees_department_id on employees(department_id);
+create index idx_id on employees(department_id);
 
 create table if not exists attendance (
     id int auto_increment primary key,
@@ -52,7 +52,7 @@ create table if not exists attendance (
     unique key unique_employee_date (employee_id, date)
 );
 
-create index idx_attendance_employee_id on attendance(employee_id);
+create index idx_id on attendance(employee_id);
 
 create table if not exists leaves (
     id int auto_increment primary key,
