@@ -21,8 +21,7 @@ def login():
         conn=get_db_connection()
         cursor=conn.cursor()
 
-        cursor.execute(
-            "select id, username, email, password, role from users where username=%s or email=%s",(username,username),)
+        cursor.execute("select id, username, email, password, role from users where username=%s or email=%s",(username,username),)
         user=cursor.fetchone()
         conn.close()
 
@@ -32,9 +31,7 @@ def login():
             session["role"]=user["role"]
             return redirect(url_for("dashboard.dashboard"))
         else:
-            return render_template(
-                "login.html",error="Invalid username or password.",)
-
+            return render_template("login.html",error="Invalid username or password.",)
     return render_template("login.html")
 
 @auth.route("/logout")
