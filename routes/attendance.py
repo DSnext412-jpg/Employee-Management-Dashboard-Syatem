@@ -13,9 +13,7 @@ def attendance_list():
     conn=get_db_connection()
     cursor=conn.cursor()
     query="""
-        select a.id, a.employee_id, e.employee_id as employee_code, e.first_name, e.last_name,
-               a.date, a.check_in, a.check_out, a.status, a.created_at
-        from attendance a join employees e on a.employee_id = e.id
+        select a.id, a.employee_id, e.employee_id as employee_code, e.first_name, e.last_name,a.date, a.check_in, a.check_out, a.status, a.created_at from attendance a join employees e on a.employee_id = e.id
     """
     params=[]
     where_added=False
